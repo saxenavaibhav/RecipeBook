@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class IndexController {
 	
-	private RecipeService recipeService1;
+	private RecipeService recipeService;
 	
 	public IndexController(RecipeService recipeService) {
 		this.recipeService = recipeService;
