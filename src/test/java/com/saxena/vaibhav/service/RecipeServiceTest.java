@@ -1,11 +1,13 @@
 package com.saxena.vaibhav.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
@@ -15,7 +17,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.saxena.vaibhav.domain.Recipe;
 import com.saxena.vaibhav.repository.RecipeRepository;
-
+import static org.mockito.Mockito.*;
 
 public class RecipeServiceTest {
 
@@ -40,6 +42,19 @@ public class RecipeServiceTest {
 		Set<Recipe> recipes = recipeService.getRecipes();
 		assertEquals(recipes.size(), 1);
 		verify(recipeRepository, times(1)).findAll();
+	}
+	
+	@Test
+	public void testGetRecipeById() {
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		Optional<Recipe> recipeOptional = Optional.of(recipe);
+		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		Recipe recipeReturned = recipeService.findById(1L);
+
+        assertNotNull("Null recipe returned", recipeReturned);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
 	}
 
 }

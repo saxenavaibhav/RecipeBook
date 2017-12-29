@@ -1,6 +1,7 @@
 package com.saxena.vaibhav.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class RecipeService {
 		recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
 		log.info("Test logger in recipe Service");
 		return recipeSet;
+	}
+	
+	public Recipe findById(Long id) {
+		Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+		if (!recipeOptional.isPresent()) {
+			throw new RuntimeException("No recipe with teh given ID.");
+		}
+		return recipeOptional.get();
 	}
 	
 }
