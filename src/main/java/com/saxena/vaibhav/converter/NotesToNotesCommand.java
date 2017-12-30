@@ -2,12 +2,14 @@ package com.saxena.vaibhav.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import com.saxena.vaibhav.command.NotesCommand;
 import com.saxena.vaibhav.domain.Notes;
 
 import lombok.Synchronized;
 
+@Component
 public class NotesToNotesCommand implements Converter<Notes, NotesCommand>{
 
     @Synchronized

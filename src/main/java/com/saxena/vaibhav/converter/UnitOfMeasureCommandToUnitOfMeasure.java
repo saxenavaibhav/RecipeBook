@@ -1,10 +1,12 @@
 package com.saxena.vaibhav.converter;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.saxena.vaibhav.command.UnitOfMeasureCommand;
 import com.saxena.vaibhav.domain.UnitOfMeasure;
 
+@Component
 public class UnitOfMeasureCommandToUnitOfMeasure implements Converter<UnitOfMeasureCommand, UnitOfMeasure> {
 
 	@Override
