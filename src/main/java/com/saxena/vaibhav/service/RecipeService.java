@@ -1,5 +1,9 @@
 package com.saxena.vaibhav.service;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -20,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RecipeService {
 
-	private RecipeRepository recipeRepository;
+	private final RecipeRepository recipeRepository;
 	private final RecipeCommandToRecipe recipeCommandToRecipe;
 	private final RecipeToRecipeCommand recipeToRecipeCommand;
 
@@ -32,31 +36,39 @@ public class RecipeService {
 	}
 
 	public Set<Recipe> getRecipes() {
-		Set<Recipe> recipeSet = new HashSet<Recipe>();
+		log.debug("I'm in the service");
+
+		Set<Recipe> recipeSet = new HashSet<>();
 		recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
-		log.info("Test logger in recipe Service");
 		return recipeSet;
 	}
-	
-	public Recipe findById(Long id) {
-		Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+
+	public Recipe findById(Long l) {
+
+		Optional<Recipe> recipeOptional = recipeRepository.findById(l);
+
 		if (!recipeOptional.isPresent()) {
-			throw new RuntimeException("No recipe with the given ID.");
+			throw new RuntimeException("Recipe Not Found!");
 		}
+
 		return recipeOptional.get();
 	}
-	
-    @Transactional
-    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
-        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
 
-        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
-        log.debug("Saved RecipeId:" + savedRecipe.getId());
-        return recipeToRecipeCommand.convert(savedRecipe);
-    }
-    
-    @Transactional
-    public RecipeCommand findCommandById(Long l) {
-        return recipeToRecipeCommand.convert(findById(l));
-    }
+	@Transactional
+	public RecipeCommand findCommandById(Long l) {
+		return recipeToRecipeCommand.convert(findById(l));
+	}
+
+	@Transactional
+	public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+		Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+
+		Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+		log.debug("Saved RecipeId:" + savedRecipe.getId());
+		return recipeToRecipeCommand.convert(savedRecipe);
+	}
+
+	public void deleteById(Long idToDelete) {
+		recipeRepository.deleteById(idToDelete);
+	}
 }

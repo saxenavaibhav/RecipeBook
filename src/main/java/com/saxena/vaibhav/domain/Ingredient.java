@@ -1,85 +1,55 @@
 package com.saxena.vaibhav.domain;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(exclude = "recipe")
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 
-	public Ingredient() {}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String description;
+    private BigDecimal amount;
 
-	private String description;
-	
-	private BigDecimal amount;
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure uom;
 
-	@OneToOne
-	private UnitOfMeasure uom;
-	
-	@ManyToOne
-	@JoinColumn(name = "recipe_id")
-	private Recipe recipe;
+    @ManyToOne
+    private Recipe recipe;
 
-	public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
-	        this.description = description;
-	        this.amount = amount;
-	        this.uom = uom;
-	        this.recipe = recipe;
-	}
+    public Ingredient() {
+    }
 
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
-//
-//	public String getDescription() {
-//		return description;
-//	}
-//
-//	public void setDescription(String description) {
-//		this.description = description;
-//	}
-//
-//	public BigDecimal getAmount() {
-//		return amount;
-//	}
-//
-//	public void setAmount(BigDecimal amount) {
-//		this.amount = amount;
-//	}
-//
-//	public Recipe getRecipe() {
-//		return recipe;
-//	}
-//
-//	public void setRecipe(Recipe recipe) {
-//		this.recipe = recipe;
-//	}
-//
-//	public UnitOfMeasure getUom() {
-//		return uom;
-//	}
-//
-//	public void setUom(UnitOfMeasure uom) {
-//		this.uom = uom;
-//	}
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+        this.recipe = recipe;
+    }
 
 }

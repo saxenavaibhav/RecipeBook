@@ -1,5 +1,9 @@
 package com.saxena.vaibhav.converter;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -15,14 +19,14 @@ public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeas
 	@Synchronized
 	@Nullable
 	@Override
-	public UnitOfMeasureCommand convert(UnitOfMeasure source) {
-		if (source == null) {
-			return null;
-		}
-		UnitOfMeasureCommand uomCommand = new UnitOfMeasureCommand();
-		uomCommand.setId(source.getId());
-		uomCommand.setDescription(source.getDescription());
-		return uomCommand;
-	}
+	public UnitOfMeasureCommand convert(UnitOfMeasure unitOfMeasure) {
 
+		if (unitOfMeasure != null) {
+			final UnitOfMeasureCommand uomc = new UnitOfMeasureCommand();
+			uomc.setId(unitOfMeasure.getId());
+			uomc.setDescription(unitOfMeasure.getDescription());
+			return uomc;
+		}
+		return null;
+	}
 }

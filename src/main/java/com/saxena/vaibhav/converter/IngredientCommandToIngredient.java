@@ -6,28 +6,37 @@ import org.springframework.stereotype.Component;
 
 import com.saxena.vaibhav.command.IngredientCommand;
 import com.saxena.vaibhav.domain.Ingredient;
+import com.saxena.vaibhav.domain.Recipe;
 
 @Component
 public class IngredientCommandToIngredient implements Converter<IngredientCommand, Ingredient> {
 
 	private final UnitOfMeasureCommandToUnitOfMeasure uomConverter;
-	
+
 	public IngredientCommandToIngredient(UnitOfMeasureCommandToUnitOfMeasure uomConverter) {
 		this.uomConverter = uomConverter;
 	}
 
-	@Override
 	@Nullable
+	@Override
 	public Ingredient convert(IngredientCommand source) {
 		if (source == null) {
 			return null;
 		}
+
 		final Ingredient ingredient = new Ingredient();
+		ingredient.setId(source.getId());
+
+		if (source.getRecipeId() != null) {
+			Recipe recipe = new Recipe();
+			recipe.setId(source.getRecipeId());
+			ingredient.setRecipe(recipe);
+			recipe.addIngredient(ingredient);
+		}
+
 		ingredient.setAmount(source.getAmount());
 		ingredient.setDescription(source.getDescription());
-		ingredient.setId(source.getId());
 		ingredient.setUom(uomConverter.convert(source.getUom()));
 		return ingredient;
 	}
-
 }

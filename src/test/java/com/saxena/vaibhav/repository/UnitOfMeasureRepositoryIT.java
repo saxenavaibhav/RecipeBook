@@ -1,5 +1,9 @@
 package com.saxena.vaibhav.repository;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.Optional;
@@ -13,21 +17,33 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.saxena.vaibhav.domain.UnitOfMeasure;
 
+/**
+ * Created by jt on 6/17/17.
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UnitOfMeasureRepositoryIT {
 
 	@Autowired
-	UnitOfMeasureRepository uomRepo;
-	
+	UnitOfMeasureRepository unitOfMeasureRepository;
+
 	@Before
 	public void setUp() throws Exception {
 	}
 
 	@Test
-	public void testFindByDescription() {
-		Optional<UnitOfMeasure> uomOptional = uomRepo.findByDescription("Teaspoon");
+	public void findByDescription() throws Exception {
+
+		Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+
 		assertEquals("Teaspoon", uomOptional.get().getDescription());
 	}
 
+	@Test
+	public void findByDescriptionCup() throws Exception {
+
+		Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Cup");
+
+		assertEquals("Cup", uomOptional.get().getDescription());
+	}
 }

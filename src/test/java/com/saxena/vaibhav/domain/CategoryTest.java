@@ -1,36 +1,38 @@
 package com.saxena.vaibhav.domain;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class CategoryTest {
-	
+
 	Category category;
 
 	@Before
-	public void setup() {
-		category =  new Category();
-	}
-	
-	@Test
-	public void testGetId() {
-		
-		long id = 4L; 
-		category.setId(id);
-		assertEquals(id, category.getId().longValue());
+	public void setUp() {
+		category = new Category();
 	}
 
-//	@Test
-//	public void testGetDescription() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetRecipes() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	public void getId() throws Exception {
+		Long idValue = 4L;
+
+		category.setId(idValue);
+
+		assertEquals(idValue, category.getId());
+	}
+
+	@Test
+	public void getDescription() throws Exception {
+	}
+
+	@Test
+	public void getRecipes() throws Exception {
+	}
 
 }

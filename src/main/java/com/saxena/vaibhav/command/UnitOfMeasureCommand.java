@@ -1,5 +1,9 @@
 package com.saxena.vaibhav.command;
 
+/**
+ * Created by Vaibhav Saxena.
+ */
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,5 +14,6 @@ import lombok.Setter;
 public class UnitOfMeasureCommand {
 
 	private Long id;
-    private String description;
+	private String description;
+	
 }
