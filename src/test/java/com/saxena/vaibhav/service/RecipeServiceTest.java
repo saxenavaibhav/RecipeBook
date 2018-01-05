@@ -26,6 +26,7 @@ import com.saxena.vaibhav.command.RecipeCommand;
 import com.saxena.vaibhav.converter.RecipeCommandToRecipe;
 import com.saxena.vaibhav.converter.RecipeToRecipeCommand;
 import com.saxena.vaibhav.domain.Recipe;
+import com.saxena.vaibhav.exceptions.NotFoundException;
 import com.saxena.vaibhav.repository.RecipeRepository;
 
 public class RecipeServiceTest {
@@ -61,6 +62,18 @@ public class RecipeServiceTest {
 		assertNotNull("Null recipe returned", recipeReturned);
 		verify(recipeRepository, times(1)).findById(anyLong());
 		verify(recipeRepository, never()).findAll();
+	}
+
+	@Test(expected = NotFoundException.class)
+	public void getRecipeByIdTestNotFound() throws Exception {
+
+		Optional<Recipe> recipeOptional = Optional.empty();
+
+		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+		Recipe recipeReturned = recipeService.findById(1L);
+
+		// should go boom
 	}
 
 	@Test

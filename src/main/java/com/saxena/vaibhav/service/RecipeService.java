@@ -16,6 +16,7 @@ import com.saxena.vaibhav.command.RecipeCommand;
 import com.saxena.vaibhav.converter.RecipeCommandToRecipe;
 import com.saxena.vaibhav.converter.RecipeToRecipeCommand;
 import com.saxena.vaibhav.domain.Recipe;
+import com.saxena.vaibhav.exceptions.NotFoundException;
 import com.saxena.vaibhav.repository.RecipeRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class RecipeService {
 		Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
 		if (!recipeOptional.isPresent()) {
-			throw new RuntimeException("Recipe Not Found!");
+			throw new NotFoundException("Recipe Not Found for ID value: " + l);
 		}
 
 		return recipeOptional.get();
